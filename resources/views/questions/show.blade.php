@@ -15,6 +15,17 @@
                 </div>
                 <div class="card-body">
                     {!! $question->body_html !!}
+                    <div class="float-right">
+                        <span class="text-muted">Created at {{ $question->created_date }}</span>
+                        <div class="media mt-2">
+                            <a href="{{ $question->user->url }}" class="pl-2 mr-1">
+                                <img src="{{ $question->user->avatar }}">
+                            </a>
+                            <div class="media-body">
+                                <a href="{{ $question->user->url }}">{{ $question->user->name }}</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -33,10 +44,10 @@
                             <div class="media-body">
                                 {!! $answer->body_html !!}
                                 <div class="float-right">
-                                    <span class="text-muted"></span>
-                                    <div class="media">
-                                        <a href="{{ $answer->user->url }}" class="pl-2">
-                                            <img src="{{ $answer->user->avatar }}" alt="">
+                                    <span class="text-muted">Answered {{ $answer->created_date }}</span>
+                                    <div class="media mt-2">
+                                        <a href="{{ $answer->user->url }}" class="pl-2 mr-1">
+                                            <img src="{{ $answer->user->avatar }}">
                                         </a>
                                         <div class="media-body">
                                             <a href="{{ $answer->user->url }}">{{ $answer->user->name }}</a>
@@ -45,6 +56,7 @@
                                 </div>
                             </div>
                         </div>
+                        <hr>
                     @endforeach
                 </div>
             </div>
