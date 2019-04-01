@@ -6,8 +6,9 @@
                     <h2>{{ $answersCount ." ". str_plural('Answer', $answersCount) }}</h2>
                 </div>
                 <hr>
+
                 @include('layouts._message')
-                
+
                 @foreach($answers as $answer)
                     <div class="media">
                         <div class="d-fex flex-column vote-controls">
@@ -24,14 +25,31 @@
                         </div>
                         <div class="media-body">
                             {!! $answer->body_html !!}
-                            <div class="float-right">
-                                <span class="text-muted">Answered {{ $answer->created_date }}</span>
-                                <div class="media mt-2">
-                                    <a href="{{ $answer->user->url }}" class="pl-2 mr-1">
-                                        <img src="{{ $answer->user->avatar }}">
-                                    </a>
-                                    <div class="media-body">
-                                        <a href="{{ $answer->user->url }}">{{ $answer->user->name }}</a>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="ml-auto">
+                                        @can('update', $answer)
+                                            <a href="{{ route('questions.answers.edit', [$question->id, $answer->id]) }}" class="btn btn-sm btn-outline-info">Edit</a>
+                                        @endcan
+                                        @can('delete', $answer)
+                                            <form class="form-delete" method="post" action="{{ route('questions.answers.destroy', [$question->id, $answer->id]) }}">
+                                                @method('DELETE')
+                                                @csrf
+                                                <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                                            </form>
+                                        @endcan
+                                    </div>
+                                </div>
+                                <div class="col-md-4"></div>
+                                <div class="col-md-4">
+                                    <span class="text-muted">Answered {{ $answer->created_date }}</span>
+                                    <div class="media mt-2">
+                                        <a href="{{ $answer->user->url }}" class="pl-2 mr-1">
+                                            <img src="{{ $answer->user->avatar }}">
+                                        </a>
+                                        <div class="media-body">
+                                            <a href="{{ $answer->user->url }}">{{ $answer->user->name }}</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
